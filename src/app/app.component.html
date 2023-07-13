@@ -1,0 +1,74 @@
+<mat-toolbar class="toolbar">
+  <button mat-icon-button aria-label="Toggle menu" (click)="toggleMatSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Welcome to {{ title }}</span>
+</mat-toolbar>
+<br />
+
+<section class="form" *ngIf="activeTab === 0">
+  <mat-form-field appearance="fill">
+    <br />
+    <mat-label>City Name</mat-label>
+    <input type="text" matInput placeholder="e.g: Cottbus" #cityName />
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="setCityName(cityName.value)"
+    type="submit"
+  >
+    Search
+  </button>
+</section>
+
+<mat-sidenav-container class="container">
+  <mat-sidenav
+    [(opened)]="matSidenavOpened"
+    fixedTopGap="64"
+    fixedInViewport
+    class="elem"
+  >
+    <mat-nav-list>
+      <a
+        class="nav-link"
+        [class.active]="activeTab === 0"
+        (click)="activeTab = 0; matSidenavOpened = false"
+      >
+        Select city name
+      </a>
+      <br /><br />
+      <a
+        class="nav-link"
+        [class.active]="activeTab === 1"
+        (click)="activeTab = 1; matSidenavOpened = false"
+      >
+        Current Weather
+      </a>
+      <br /><br />
+
+      <a
+        class="nav-link"
+        [class.active]="activeTab === 2"
+        (click)="activeTab = 2; matSidenavOpened = false"
+        >4-Day Forecast (Table)</a
+      >
+      <br /><br />
+      <a
+        class="nav-link"
+        [class.active]="activeTab === 3"
+        (click)="activeTab = 3; matSidenavOpened = false"
+        >4-Day Forecast (Chart)</a
+      >
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="content">
+    <main>
+      <div class="tab-content">
+        <current-weather *ngIf="activeTab === 1"></current-weather>
+        <forecast-table *ngIf="activeTab === 2"></forecast-table>
+        <forecast-chart *ngIf="activeTab === 3"></forecast-chart>
+      </div>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
